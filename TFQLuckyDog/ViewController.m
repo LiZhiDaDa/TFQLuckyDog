@@ -82,8 +82,8 @@
     for(int i=0; i<self.nameArray.count; i++){
         //初始化button
         NSString *str = [self.nameArray objectAtIndex:i];
-        CGFloat fitWidth = [str sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}].width + 30;
         UILabel *label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:23];
         label.textAlignment = NSTextAlignmentCenter;
         label.tag = i + 100;
         label.text = str;
@@ -91,9 +91,10 @@
         label.textColor = [UIColor greenColor];
         [self.view addSubview:label];
         //给button设置约束
+        CGFloat fitWidth = [str sizeWithAttributes:@{NSFontAttributeName:label.font}].width + 30;
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(fitWidth);
-            make.height.mas_equalTo(20);
+            make.height.mas_equalTo(30);
             if(i==0){
                 make.left.equalTo(self.view).offset(margin);
                 make.top.equalTo(self.view).offset(80);
