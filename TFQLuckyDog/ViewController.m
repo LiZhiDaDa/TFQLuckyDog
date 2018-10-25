@@ -13,6 +13,10 @@
 @interface ViewController ()
 
 @property (nonatomic, copy)NSArray *nameArray;
+@property (nonatomic, assign)int count;
+@property (nonatomic, strong)TFQWeakTimer *timer;
+@property (weak, nonatomic)IBOutlet UILabel *countLabel;
+@property (nonatomic, strong)UIButton *beginBtn;
 
 @end
 
@@ -21,25 +25,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.nameArray = @[@"三余uncle", @"_啟灮丶", @"张乾TH", @"没头脑的佚哥哥", @"彭皓楠mr", @"吧唧吧唧_sky", @"尊贵滴微博会员", @"咸鱼梦想一夜暴富", @"拿起水枪biubiubiu", @"fkbg-m", @"哩哩呀Lily", @"五花肉阿一", @"-jokerhhh"];
-    
     [self setNameLabel];
-    
-   
 }
 
+//开始抽奖
 - (IBAction)didClickBeginBtn:(UIButton *)sender {
-    [self algorithmOne];
+    self.beginBtn = sender;
+    sender.userInteractionEnabled = NO;
+    self.count = 0;
+    self.countLabel.text = @"0";
+    //此类介绍见掘金文章 https://juejin.im/post/5b4824f06fb9a04fbf26fed2
+    self.timer = [[TFQWeakTimer alloc] initWithTimeInterval:0.2 target:self selector:@selector(algorithmOne)];
 }
-
 
 //算法一
 - (void)algorithmOne{
-    NSLog(@"1");
+    if(self.count == 50){
+        [self.timer invalidateTimer];
+        self.beginBtn.userInteractionEnabled = YES;
+    }
+    self.countLabel.text = [NSString stringWithFormat:@"%d",self.count++];
     NSInteger index = arc4random() % self.nameArray.count;
     for(int i=0; i<self.nameArray.count; i++){
         UIButton *button = [self.view viewWithTag:i+100];
         if(index == i){
-            button.backgroundColor = [UIColor yellowColor];
+            button.backgroundColor = [UIColor redColor];
         }else{
             button.backgroundColor = [UIColor lightGrayColor];
         }
@@ -63,9 +73,9 @@
 
 //此方法介绍可参考掘金文章 https://juejin.im/post/5afbf79d6fb9a07aa83eeac0
 - (void)setNameLabel{
-    //存放上一个button
-    UIButton *buttonBefore;
-    //存放button距离左侧的宽度，来确定是否需要换行
+    //存放上一个label
+    UILabel *labelBefore;
+    //存放label距离左侧的宽度，来确定是否需要换行
     __block CGFloat right = 0.0;
     //间距
     CGFloat margin = 15.f;
@@ -73,14 +83,15 @@
         //初始化button
         NSString *str = [self.nameArray objectAtIndex:i];
         CGFloat fitWidth = [str sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}].width + 30;
-        UIButton *button = [[UIButton alloc] init];
-        button.tag = i + 100;
-        [button setTitle:str forState:UIControlStateNormal];
-        button.backgroundColor = [UIColor lightGrayColor];
-        [button setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-        [self.view addSubview:button];
+        UILabel *label = [[UILabel alloc] init];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.tag = i + 100;
+        label.text = str;
+        label.backgroundColor = [UIColor lightGrayColor];
+        label.textColor = [UIColor greenColor];
+        [self.view addSubview:label];
         //给button设置约束
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(fitWidth);
             make.height.mas_equalTo(20);
             if(i==0){
@@ -89,17 +100,17 @@
                 right = margin + fitWidth + margin;
             }else{
                 if(right+fitWidth > [UIScreen mainScreen].bounds.size.width){
-                    make.top.mas_equalTo(buttonBefore.mas_bottom).offset(margin);
+                    make.top.mas_equalTo(labelBefore.mas_bottom).offset(margin);
                     make.left.equalTo(self.view).offset(margin);
                     right =  margin+fitWidth+margin;
                 }else{
-                    make.left.mas_equalTo(buttonBefore.mas_right).offset(margin);
-                    make.top.equalTo(buttonBefore);
+                    make.left.mas_equalTo(labelBefore.mas_right).offset(margin);
+                    make.top.equalTo(labelBefore);
                     right += fitWidth+margin;
                 }
             }
         }];
-        buttonBefore = button;
+        labelBefore = label;
     }
 }
 
