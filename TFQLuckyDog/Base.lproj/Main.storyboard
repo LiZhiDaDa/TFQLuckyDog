@@ -31,10 +31,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="抽奖次数:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cJ-gR-MZW">
-                                <rect key="frame" x="114.5" y="548" width="106" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="106" id="UZ8-tM-9Pl"/>
-                                </constraints>
+                                <rect key="frame" x="118" y="548" width="99.5" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -54,8 +51,9 @@
                             <constraint firstItem="ypi-OM-Wfx" firstAttribute="top" secondItem="3cJ-gR-MZW" secondAttribute="bottom" constant="20" id="UjX-Ji-skQ"/>
                             <constraint firstItem="ypi-OM-Wfx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="bNg-5i-pAp"/>
                             <constraint firstItem="29i-k6-xfq" firstAttribute="top" secondItem="ypi-OM-Wfx" secondAttribute="bottom" constant="20" id="fHo-c2-L00"/>
+                            <constraint firstAttribute="trailing" secondItem="Vun-ve-qcU" secondAttribute="trailing" constant="100.5" id="fxb-if-AK3"/>
                             <constraint firstItem="Vun-ve-qcU" firstAttribute="centerY" secondItem="3cJ-gR-MZW" secondAttribute="centerY" id="r5U-cc-EC9"/>
-                            <constraint firstItem="Vun-ve-qcU" firstAttribute="leading" secondItem="3cJ-gR-MZW" secondAttribute="trailing" constant="8" id="swR-p5-Ril"/>
+                            <constraint firstItem="Vun-ve-qcU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3cJ-gR-MZW" secondAttribute="trailing" constant="8" symbolic="YES" id="swR-p5-Ril"/>
                             <constraint firstItem="3cJ-gR-MZW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-20" id="tYx-Jv-OtF"/>
                             <constraint firstAttribute="trailing" secondItem="ypi-OM-Wfx" secondAttribute="trailing" id="wCd-6N-Dp9"/>
                         </constraints>
